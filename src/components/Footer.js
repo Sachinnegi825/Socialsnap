@@ -8,6 +8,7 @@ import { setUploadstate } from "../utils/UserSlice";
 
 const Footer = () => {
   let value = useSelector((store) => store.user.uploadstate);
+  let namevalue = useSelector((store) => store.user.userdetails.name);
   const dispatch = useDispatch();
   console.log("value", value);
 
@@ -18,7 +19,13 @@ const Footer = () => {
           <span className="text-5xl">🏛</span>
         </Link>
         <span className="text-5xl">
-          <button onClick={() => dispatch(setUploadstate(!value))}>
+          <button
+            onClick={() => {
+              namevalue
+                ? dispatch(setUploadstate(!value))
+                : alert("Please login/signup first");
+            }}
+          >
             <FontAwesomeIcon icon={faSquarePlus} />
           </button>
 

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const Posts = () => {
   const [Posts, setPosts] = useState([]);
   const value = useSelector((store) => store.user.post);
+  const namevalue = useSelector((store) => store.user.userdetails.name);
 
   useEffect(() => {
     getData();
@@ -20,7 +21,7 @@ const Posts = () => {
     <div className="w-full relative top-28">
       {value ? (
         <div className="w-[80%] lg:w-[30%] mx-auto mb-20">
-          <Postsdata name={"sachin"} image={value} />
+          <Postsdata name={namevalue} image={value} />
         </div>
       ) : null}
 
