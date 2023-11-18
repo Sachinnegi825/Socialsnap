@@ -4,17 +4,19 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Signin = () => {
-  const [inputState, setInputState] = useState(false);
+  const [auth, setAuth] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const value = useSelector((store) => store.user.userdetails);
 
   const handleSubmit = () => {
-    if (Username !== value.name) {
+    if (Password === "" || Username === "") {
+      alert("username and password should not be empty");
+    } else if (Username !== value.name) {
       alert("Username is incorrect.Please input Correct credentials");
     } else if (Password !== value.password) {
       alert("Password is incorrect.Please input Correct credentials");
-    } else setInputState(true);
+    } else setAuth(true);
   };
 
   return (
@@ -39,17 +41,8 @@ const Signin = () => {
           type="password"
           required
         />
-        {inputState ? (
-          <Link to={"/"}>
-            <button
-              className="bg-white text-blue-600 font-bold p-2 rounded-2xl hover:bg-blue-600 hover:text-white"
-              onClick={() => setInputState(false)}
-              type="submit"
-            >
-              SignIn
-            </button>
-          </Link>
-        ) : (
+
+        <Link to={`${auth ? "/" : ""}`}>
           <button
             className="bg-white text-blue-600 font-bold p-2 rounded-2xl hover:bg-blue-600 hover:text-white"
             onClick={handleSubmit}
@@ -57,7 +50,7 @@ const Signin = () => {
           >
             SignIn
           </button>
-        )}
+        </Link>
       </div>
     </div>
   );
