@@ -38,7 +38,7 @@ const Fileupload = () => {
         <textarea
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add a comment..."
+          placeholder="Add a caption..."
           className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-2.5 mb-4"
           rows="3"
         ></textarea>
@@ -50,7 +50,7 @@ const Fileupload = () => {
               dispatch(
                 setUserpost({
                   postImage: file,
-                  postCaption: caption, // Use comment state here
+                  postCaption: caption,
                 })
               );
 
