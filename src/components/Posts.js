@@ -15,16 +15,16 @@ const Posts = () => {
   }, [postData]);
 
   const getData = async () => {
-    // try {
-    //   setLoading(true);
-    //   const data = await fetch("https://randomuser.me/api/?results=15");
-    //   const json = await data.json();
-    //   setPosts(json?.results);
-    //   setLoading(false);
-    // } catch (error) {
-    //   console.error("Failed to fetch data", error);
-    //   setLoading(false); // Ensure loading is turned off in case of an error
-    // }
+    try {
+      setLoading(true);
+      const data = await fetch("https://randomuser.me/api/?results=15");
+      const json = await data.json();
+      setPosts(json?.results);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+      setLoading(false);
+    }
   };
 
   if (loading) {
