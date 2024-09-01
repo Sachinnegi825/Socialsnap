@@ -6,8 +6,9 @@ const UserSlice = createSlice({
     userdetails: {
       name: "",
       password: "",
+      avatar: "",
     },
-    post: "",
+    postData: [],
     uploadstate: false,
   },
 
@@ -17,8 +18,13 @@ const UserSlice = createSlice({
     },
 
     setUserpost: (state, action) => {
-      state.post = action.payload;
+      state.postData.push({
+        postImage: action.payload.postImage,
+        postCaption: action.payload.postCaption,
+        postName: state.userdetails.name,
+      });
     },
+
     setUploadstate: (state, action) => {
       state.uploadstate = action.payload;
     },

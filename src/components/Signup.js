@@ -1,75 +1,109 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUserdetails } from "../utils/UserSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Signup = () => {
-  const [auth, setAuth] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (Username === "" || Password === "") {
-      alert("username and password filed should not be empty");
+      alert("Username and password should not be empty.");
     } else if (Password.length < 5) {
-      alert("password shoul be biiger than 5 alphabets");
+      alert("Password should be at least 5 characters long.");
     } else {
       dispatch(
         setUserdetails({
           name: Username,
           password: Password,
+          avatar: avatar,
         })
       );
-      setAuth(true);
+      navigate("/signin");
+    }
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setAvatar(URL.createObjectURL(e.target.files[0]));
     }
   };
 
   return (
-    <div className="w-full">
-      <div className=" w-[36rem] mx-auto mt-48 bg-blue-400 p-10 text-center">
-        <h1 className="text-4xl font-bold">SIGNUP FORM</h1>
-        <form action="" className="flex flex-col">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white shadow-md rounded-lg">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">
+          Sign Up
+        </h1>
+
+        <div className="flex justify-center">
+          <label className="relative">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
+            <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
+              {avatar ? (
+                <img
+                  src={avatar}
+                  alt="Avatar Preview"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className="text-white text-3xl"
+                />
+              )}
+            </div>
+          </label>
+        </div>
+
+        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
           <input
-            className="border-2 border-gray-600 w-72 mx-auto my-4"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
             type="text"
-            placeholder="input your name...."
+            placeholder="Enter your username"
             required
           />
 
           <input
-            className="border-2 border-gray-600 w-72 mx-auto mb-4"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
-            placeholder="input your password....."
+            placeholder="Enter your password"
             autoComplete="off"
             type="password"
             required
           />
-          {auth ? (
-            <Link to={"/signin"}>
-              <button
-                className="bg-white text-blue-600 font-bold p-2 rounded-2xl hover:bg-blue-600 hover:text-white"
-                onClick={handleSubmit}
-                type="submit"
-              >
-                SignUp
-              </button>
-            </Link>
-          ) : (
-            <Link to={""}>
-              <button
-                className="bg-white text-blue-600 font-bold p-2 rounded-2xl hover:bg-blue-600 hover:text-white"
-                onClick={handleSubmit}
-                type="submit"
-              >
-                SignUp
-              </button>
-            </Link>
-          )}
+
+          <button
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            onClick={handleSubmit}
+            type="button"
+          >
+            Sign Up
+          </button>
         </form>
+        <p className="text-sm text-center text-gray-500">
+          Already have an account?{" "}
+          <button
+            className="text-blue-600 hover:underline"
+            onClick={() => navigate("/signin")}
+          >
+            Sign in
+          </button>
+        </p>
       </div>
     </div>
   );

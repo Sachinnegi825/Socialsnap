@@ -10,6 +10,7 @@ const Header = () => {
           <h1 className="text-center font-bold text-xl md:text-3xl  tracking-wider lg:tracking-[0.7rem] first-letter:text-red-600 first-letter:text-2xl md:first-letter:text-5xl w-[80%]">
             SOCIALSNAP
           </h1>
+
           <h1>
             HI{" "}
             <span className="uppercase text-red-600 tracking-wide">

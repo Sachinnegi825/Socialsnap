@@ -1,56 +1,64 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  const [auth, setAuth] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const value = useSelector((store) => store.user.userdetails);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (Password === "" || Username === "") {
-      alert("username and password should not be empty");
+      alert("Username and password should not be empty");
     } else if (Username !== value.name) {
-      alert("Username is incorrect.Please input Correct credentials");
+      alert("Username is incorrect. Please input correct credentials");
     } else if (Password !== value.password) {
-      alert("Password is incorrect.Please input Correct credentials");
-    } else setAuth(true);
+      alert("Password is incorrect. Please input correct credentials");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col w-[36rem] mx-auto mt-48 bg-blue-400 p-10 text-center">
-        <h1 className="text-4xl font-bold">SIGNIN FORM</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white shadow-md rounded-lg">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">
+          Sign In
+        </h1>
+        <div className="space-y-6">
+          <input
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onChange={(e) => setUsername(e.target.value)}
+            value={Username}
+            type="text"
+            placeholder="Enter your username"
+            required
+          />
+          <input
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onChange={(e) => setPassword(e.target.value)}
+            value={Password}
+            type="password"
+            placeholder="Enter your password"
+            required
+          />
 
-        <input
-          className="border-2 border-gray-600 w-72 mx-auto my-4"
-          onChange={(e) => setUsername(e.target.value)}
-          value={Username}
-          type="text"
-          placeholder="input your name...."
-          required
-        />
-
-        <input
-          className="border-2 border-gray-600 w-72 mx-auto mb-4"
-          onChange={(e) => setPassword(e.target.value)}
-          value={Password}
-          placeholder="input your password....."
-          type="password"
-          required
-        />
-
-        <Link to={`${auth ? "/" : ""}`}>
           <button
-            className="bg-white text-blue-600 font-bold p-2 rounded-2xl hover:bg-blue-600 hover:text-white"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             onClick={handleSubmit}
             type="submit"
           >
-            SignIn
+            Sign In
           </button>
-        </Link>
+
+          <p className="text-sm text-center text-gray-500">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
